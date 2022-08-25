@@ -26,6 +26,8 @@
 
 @property LSTimerWapper *lsTimer;
 
+@property LSProxyTimerWrapper *proxyWrapper;
+
 @end
 
 @implementation ViewController
@@ -43,7 +45,8 @@
 //    [self testTimer3];
 //    [self testTimer4];
 //    [self testTime4];
-    [self testTimer5];
+//    [self testTimer5];
+    [self testTimer6];
 }
 
 - (void)delegateTest {
@@ -127,6 +130,12 @@
     //使用虚类NSProxy转发消息给当前类
     self.proxy = [LSProxy propxyWithPerformObject:self];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self.proxy selector:@selector(loopSelector) userInfo:nil repeats:YES];
+}
+
+- (void)testTimer6 {
+    //使用虚类NSProxy转发消息给当前类，封装一下
+    //属性持有自动释放，释放时机跟当前控制器一样，无需在dealloc中结束
+    self.proxyWrapper = [[LSProxyTimerWrapper alloc] initTimerWithInterval:1 target:self selector:@selector(loopSelector) userInfo:nil repeat:YES];
 }
 
 - (void)loopSelector {

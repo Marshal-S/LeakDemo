@@ -15,4 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface LSProxyTimerWrapper : NSObject
+
+- (instancetype)initTimerWithInterval:(NSTimeInterval)interval target:(id)target selector:(SEL)selector userInfo:(nullable id)userInfo repeat:(BOOL)repeat;
+
+@end
+
 NS_ASSUME_NONNULL_END

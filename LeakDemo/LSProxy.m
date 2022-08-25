@@ -48,3 +48,25 @@
 }
 
 @end
+
+@interface LSProxyTimerWrapper ()
+
+@property (nonatomic, strong) LSProxy *proxy;
+@property (nonatomic, strong) NSTimer *timer;
+
+@end
+
+@implementation LSProxyTimerWrapper
+
+- (instancetype)initTimerWithInterval:(NSTimeInterval)interval target:(id)target selector:(SEL)selector userInfo:(nullable id)userInfo repeat:(BOOL)repeat {
+    self.proxy = [LSProxy propxyWithPerformObject:target];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self.proxy selector:selector userInfo:userInfo repeats:YES];
+    return self;
+}
+
+- (void)dealloc {
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+@end
